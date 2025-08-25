@@ -1,0 +1,52 @@
+# .gitignore for WordPress Plugin Development
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE and editor folders/files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Node modules and Composer vendor
+node_modules/
+
+# Log files
+*.log
+
+# WordPress core files
+/wp-admin/
+/wp-includes/
+
+# Environment files
+.env
+.env.*
+
+# Backup and export files
+*.zip
+*.tar.gz
+*.rar
+*.bak
+*.tmp
+
+# Plugin build artifacts
+dist/
+build/
+
+# Ignore uploads and cache
+wp-content/uploads/
+wp-content/cache/
+
+# Ignore personal files
+*.swp
+*.swo
+
+# Ignore plugin-specific settings
+stampvault-settings.json
+
+# Composer dependencies
+composer.lock
+composer.phar
+vendor/
