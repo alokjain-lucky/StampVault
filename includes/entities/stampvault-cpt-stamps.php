@@ -3,12 +3,22 @@
  * Register the 'Stamps' custom post type for StampVault.
  *
  * @package StampVault
+ *
+ * This file contains the registration logic for the 'stamps' custom post type.
+ * The post type is used to catalog and display individual stamp entries in the StampVault plugin.
+ *
+ * - Registered on every request via the 'init' action.
+ * - Supports title, editor, thumbnail, and custom fields.
+ * - Exposed in the REST API for integration with Gutenberg and external apps.
  */
 
+// Security check to prevent direct access to this file.
 stampvault_security_check();
 
 /**
  * Registers the 'stamps' custom post type for stamp collections.
+ *
+ * @see https://developer.wordpress.org/reference/functions/register_post_type/
  */
 function stampvault_register_post_type_stamps() {
 	$labels = array(
@@ -33,7 +43,7 @@ function stampvault_register_post_type_stamps() {
 		'public'             => true,
 		'has_archive'        => true,
 		'show_in_menu'       => true,
-		'supports'           => array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
+		'supports'           => array( 'title', 'editor', 'thumbnail' ),
 		'show_in_rest'       => true,
 		'menu_icon'          => 'dashicons-tickets-alt',
 	);
@@ -41,4 +51,5 @@ function stampvault_register_post_type_stamps() {
 	register_post_type( 'stamps', $args );
 }
 
+// Register the custom post type on the 'init' action.
 add_action( 'init', 'stampvault_register_post_type_stamps' );

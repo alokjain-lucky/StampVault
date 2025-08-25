@@ -37,6 +37,8 @@ require_once STAMPVAULT_PLUGIN_DIR . 'includes/stampvault-activation.php';
 require_once STAMPVAULT_PLUGIN_DIR . 'includes/stampvault-admin-notices.php';
 require_once STAMPVAULT_PLUGIN_DIR . 'includes/entities/stampvault-cpt-stamps.php';
 require_once STAMPVAULT_PLUGIN_DIR . 'includes/entities/stampvault-taxonomies.php';
+require_once STAMPVAULT_PLUGIN_DIR . 'includes/entities/stampvault-meta-stamps.php';
+require_once STAMPVAULT_PLUGIN_DIR . 'includes/entities/meta-ui/stampvault-meta-stamps-ui.php';
 
 // Hooks
 register_activation_hook( __FILE__, 'stampvault_activate_plugin' );

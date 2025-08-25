@@ -3,12 +3,21 @@
  * Register taxonomies for the 'Stamps' custom post type for StampVault.
  *
  * @package StampVault
+ *
+ * This file contains the registration logic for all custom taxonomies attached to the 'stamps' post type.
+ * Each taxonomy helps organize and classify stamp entries in the StampVault plugin.
+ *
+ * - Registered on every request via the 'init' action.
+ * - Exposed in the REST API for integration with Gutenberg and external apps.
  */
 
+// Security check to prevent direct access to this file.
 stampvault_security_check();
 
 /**
  * Registers all taxonomies related to the 'stamps' post type.
+ *
+ * @see https://developer.wordpress.org/reference/functions/register_taxonomy/
  */
 function stampvault_register_stamp_taxonomies() {
 	// Stamp Sets: Group stamps that belong to the same set or series.
@@ -84,4 +93,5 @@ function stampvault_register_stamp_taxonomies() {
 	);
 }
 
+// Register the taxonomies on the 'init' action.
 add_action( 'init', 'stampvault_register_stamp_taxonomies' );

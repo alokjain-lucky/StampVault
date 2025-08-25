@@ -1,0 +1,33 @@
+/*
+ * Styles for StampVault Catalog Codes Meta Box
+ */
+#stampvault-catalog-codes-table {
+    width: 100%;
+    max-width: none;
+    margin-top: 8px;
+    border-collapse: collapse;
+    background: #fafbfc;
+    border: 1px solid #e5e5e5;
+}
+#stampvault-catalog-codes-table th {
+    background: #f1f1f1;
+    padding: 8px 6px;
+    text-align: left;
+}
+#stampvault-catalog-codes-table td {
+    padding: 6px 4px;
+}
+#stampvault-catalog-codes-table select,
+#stampvault-catalog-codes-table input[type="text"] {
+    width: 100%;
+}
+.stampvault-remove-catalog-row {
+    background: #e74c3c !important;
+    color: #fff !important;
+    border: none !important;
+}
+#stampvault-add-catalog-row {
+    margin-top: 8px;
+    background: #0073aa !important;
+    color: #fff !important;
+}

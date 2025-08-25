@@ -19,6 +19,14 @@ StampVault provides several taxonomies to organize your stamps:
 - **Countries:** The country or territory that issued the stamp.
 - **Credits:** Designers, engravers, or other contributors to the stamp.
 
+## Meta Fields & Catalog Codes
+StampVault provides a set of custom meta fields for each stamp, including Sub Title/Note, Date of Release (with date picker), Denomination, Quantity, Perforations, Watermark, and Colors.
+
+A flexible Catalog Codes field allows you to add multiple catalog codes per stamp, each with a dropdown for catalog name (Scott, Michel, Stanley Gibbons, etc.) and a code input. The UI for this field is modern, dynamic, and now organized in its own folder for maintainability.
+
+- Meta box UI assets (JS/CSS) are modular and loaded only for the Classic Editor.
+- Gutenberg support for meta fields and catalog codes is planned via custom blocks.
+
 ## License
 This project is open source and licensed under the GPLv2. See the [LICENSE](https://www.gnu.org/licenses/gpl-2.0.html) file for details.
 
