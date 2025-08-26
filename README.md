@@ -27,8 +27,11 @@ A flexible Catalog Codes field allows you to add multiple catalog codes per stam
 - Meta box UI assets (JS/CSS) are modular and loaded only for the Classic Editor.
 - Gutenberg support for meta fields and catalog codes is planned via custom blocks.
 
+
 ## License
-This project is open source and licensed under the GPLv2. See the [LICENSE](https://www.gnu.org/licenses/gpl-2.0.html) file for details.
+This repository is private. All rights reserved.
+
+If you have received access to this code, you may use it according to the terms provided by the repository owner. Redistribution or public sharing is not permitted without explicit permission.
 
 ## Contributing
 Contributions are welcome! Please open issues or submit pull requests on the GitHub repository.

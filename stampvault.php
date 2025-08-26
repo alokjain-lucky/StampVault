@@ -6,8 +6,8 @@ Version: 1.0.0
 Author: Alok Jain
 Author URI: https://alokjain.dev
 Plugin URI: https://github.com/alokjain-lucky/StampVault
-License: GPL2
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+License: Proprietary
+License URI: (Private Repository - All rights reserved)
 Text Domain: stampvault
 Domain Path: /languages
 Requires PHP: 7.2
