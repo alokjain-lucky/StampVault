@@ -5,6 +5,7 @@
   "category": "widgets",
   "icon": "smiley",
   "description": "Starter block that displays a hello message.",
+  "postTypes": ["stamps"],
   "textdomain": "stampvault",
   "supports": { "html": false },
   "editorScript": "file:./index.js",

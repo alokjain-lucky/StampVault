@@ -22,3 +22,31 @@ function stampvault_register_blocks() {
 		}
 	}
 }
+
+/**
+ * Limit StampVault blocks to intended post types.
+ * Adds a server-side safeguard in case client-side postTypes filter is bypassed.
+ */
+function stampvault_limit_blocks_to_stamps( $allowed_block_types, $editor_context ) {
+	if ( empty( $editor_context->post ) ) {
+		return $allowed_block_types;
+	}
+	$post_type = $editor_context->post->post_type;
+	if ( 'stamps' !== $post_type ) {
+		if ( is_array( $allowed_block_types ) ) {
+			return array_values( array_filter( $allowed_block_types, function( $block ) {
+				return strpos( $block, 'stampvault/' ) !== 0; // exclude our namespace
+			} ) );
+		}
+		if ( class_exists( 'WP_Block_Type_Registry' ) ) {
+			$registered = \WP_Block_Type_Registry::get_instance()->get_all_registered();
+			return array_values( array_filter( array_keys( $registered ), function( $block_name ) {
+				return strpos( $block_name, 'stampvault/' ) !== 0;
+			} ) );
+		}
+	}
+	return $allowed_block_types;
+}
+if ( function_exists( 'add_filter' ) ) {
+	add_filter( 'allowed_block_types_all', 'stampvault_limit_blocks_to_stamps', 20, 2 );
+}

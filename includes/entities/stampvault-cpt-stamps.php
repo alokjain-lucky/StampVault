@@ -39,13 +39,13 @@ function stampvault_register_post_type_stamps() {
 	);
 
 	$args = array(
-		'labels'             => $labels,
-		'public'             => true,
-		'has_archive'        => true,
-		'show_in_menu'       => true,
-		'supports'           => array( 'title', 'editor', 'thumbnail' ),
-		'show_in_rest'       => true,
-		'menu_icon'          => 'dashicons-tickets-alt',
+		'labels'       => $labels,
+		'public'       => true,
+		'has_archive'  => true,
+		'show_in_menu' => true,
+		'supports'     => array( 'title', 'editor', 'thumbnail' ),
+		'show_in_rest' => true,
+		'menu_icon'    => 'dashicons-tickets-alt',
 	);
 
 	register_post_type( 'stamps', $args );
@@ -53,3 +53,21 @@ function stampvault_register_post_type_stamps() {
 
 // Register the custom post type on the 'init' action.
 add_action( 'init', 'stampvault_register_post_type_stamps' );
+
+/**
+ * Provide default block content for new Stamp posts using an external template file.
+ */
+function stampvault_stamps_default_content( $content, $post ) {
+	if ( ! $post || 'stamps' !== $post->post_type ) {
+		return $content;
+	}
+	if ( ! empty( $content ) ) {
+		return $content; // Do not override existing content (e.g., cloning plugins).
+	}
+	$template_file = STAMPVAULT_PLUGIN_DIR . 'templates/stamps-default-content.html';
+	if ( file_exists( $template_file ) ) {
+		return file_get_contents( $template_file );
+	}
+	return $content;
+}
+add_filter( 'default_content', 'stampvault_stamps_default_content', 10, 2 );
