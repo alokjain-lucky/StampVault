@@ -8,7 +8,8 @@
     "start": "wp-scripts start",
     "build": "wp-scripts build",
     "format": "wp-scripts format",
-    "lint:js": "wp-scripts lint-js"
+  "lint:js": "wp-scripts lint-js",
+  "dist": "bash scripts/release.sh"
   },
   "devDependencies": {
     "@wordpress/scripts": "^27.3.0"
