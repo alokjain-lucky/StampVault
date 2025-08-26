@@ -10,7 +10,7 @@ stampvault_security_check();
  */
 function stampvault_register_blocks() {
 	$blocks = [
-		[ 'name' => 'stamp-info' ],
+		[ 'name' => 'stamp-info', 'options' => [ 'render_callback' => 'stampvault_render_stamp_info_block' ] ],
 		// Future blocks can be appended here, e.g.:
 		// [ 'name' => 'search-form', 'options' => [ 'render_callback' => 'stampvault_render_search_form' ] ],
 	];
@@ -21,6 +21,11 @@ function stampvault_register_blocks() {
 			register_block_type( $dir, $block['options'] ?? [] );
 		}
 	}
+}
+
+// Include individual block render callbacks (PHP) from blocks directory.
+if ( file_exists( STAMPVAULT_PLUGIN_DIR . 'blocks/stamp-info/render.php' ) ) {
+	require_once STAMPVAULT_PLUGIN_DIR . 'blocks/stamp-info/render.php';
 }
 
 /**
