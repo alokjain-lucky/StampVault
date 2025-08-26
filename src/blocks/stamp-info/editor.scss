@@ -1,3 +1,43 @@
-.wp-block-stampvault-stamp-info { outline: 1px dashed #ccc; }
+.wp-block-stampvault-stamp-info { outline: 1px dashed #d0d7de; }
+
+// Table row hover + dotted separators
+.wp-block-stampvault-stamp-info table.stampvault-stamp-info-table { border-collapse: collapse; width:100%; }
+.wp-block-stampvault-stamp-info table.stampvault-stamp-info-table tr { border-bottom:1px dotted #c8d0d7; }
+.wp-block-stampvault-stamp-info table.stampvault-stamp-info-table tr:last-child { border-bottom:0; }
 .wp-block-stampvault-stamp-info table.stampvault-stamp-info-table tr:hover td,
 .wp-block-stampvault-stamp-info table.stampvault-stamp-info-table tr:hover th { background:#eef6ff; }
+
+// Ensure header cells left aligned consistently in editor (parity with front-end)
+.wp-block-stampvault-stamp-info table.stampvault-stamp-info-table th { text-align:left; width:120px; }
+// Remove inner cell borders in editor; use only dotted row separator
+.wp-block-stampvault-stamp-info table.stampvault-stamp-info-table th,
+.wp-block-stampvault-stamp-info table.stampvault-stamp-info-table td { border:0; }
+
+// Inline editing cell container
+.wp-block-stampvault-stamp-info table.stampvault-stamp-info-table td.sv-editable { position:relative; }
+
+// Gutenberg-like input styling (text + date)
+.wp-block-stampvault-stamp-info .sv-inline-input,
+.wp-block-stampvault-stamp-info .sv-date-input {
+	display:block;
+	width:100%;
+	box-sizing:border-box;
+	margin:0;
+	padding:4px 8px;
+	font-size:13px;
+	line-height:1.4;
+	border:1px solid var(--wp-components-color-border,#949494);
+	background:#fff;
+	border-radius:2px;
+	transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.wp-block-stampvault-stamp-info .sv-inline-input:focus,
+.wp-block-stampvault-stamp-info .sv-date-input:focus {
+	outline:none;
+	border-color:#3858e9;
+	box-shadow:0 0 0 1px #3858e9;
+}
+
+// Placeholder for taxonomy instructions
+.wp-block-stampvault-stamp-info .sv-taxonomy-placeholder { color:#666; font-style:italic; opacity:.9; }

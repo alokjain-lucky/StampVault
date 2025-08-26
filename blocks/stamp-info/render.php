@@ -11,18 +11,19 @@ if ( ! function_exists( 'stampvault_render_stamp_info_block' ) ) {
 		}
 		// Row configuration: label => taxonomy slug (or null for placeholder rows not yet implemented).
 		$rows = [
-			[ 'label' => 'Stamp Set',        'taxonomy' => 'stamp_sets' ],
-			[ 'label' => 'Date of Issue',    'taxonomy' => null ],
-			[ 'label' => 'Denomination',     'taxonomy' => null ],
-			[ 'label' => 'Quantity',         'taxonomy' => null ],
-			[ 'label' => 'Perforation',      'taxonomy' => null ],
-			[ 'label' => 'Printer',          'taxonomy' => null ],
-			[ 'label' => 'Printing Process', 'taxonomy' => 'printing_process' ],
-			[ 'label' => 'Watermark',        'taxonomy' => null ],
-			[ 'label' => 'Colors',           'taxonomy' => null ],
-			[ 'label' => 'Credits',          'taxonomy' => 'credits' ],
-			[ 'label' => 'Catalog Codes',    'taxonomy' => null ],
-			[ 'label' => 'Themes',           'taxonomy' => 'themes' ],
+			[ 'label' => 'Sub Title',        'taxonomy' => null,                'meta' => 'sub_title' ],
+			[ 'label' => 'Stamp Set',        'taxonomy' => 'stamp_sets',        'meta' => null ],
+			[ 'label' => 'Date of Issue',    'taxonomy' => null,                'meta' => 'date_of_release' ],
+			[ 'label' => 'Denomination',     'taxonomy' => null,                'meta' => 'denomination' ],
+			[ 'label' => 'Quantity',         'taxonomy' => null,                'meta' => 'quantity' ],
+			[ 'label' => 'Perforation',      'taxonomy' => null,                'meta' => 'perforations' ],
+			[ 'label' => 'Printer',          'taxonomy' => null,                'meta' => 'printer' ],
+			[ 'label' => 'Printing Process', 'taxonomy' => 'printing_process',  'meta' => null ],
+			[ 'label' => 'Watermark',        'taxonomy' => null,                'meta' => 'watermark' ],
+			[ 'label' => 'Colors',           'taxonomy' => null,                'meta' => 'colors' ],
+			[ 'label' => 'Credits',          'taxonomy' => 'credits',           'meta' => null ],
+			[ 'label' => 'Catalog Codes',    'taxonomy' => null,                'meta' => null ],
+			[ 'label' => 'Themes',           'taxonomy' => 'themes',            'meta' => null ],
 		];
 
 		$post_id = get_the_ID();
@@ -50,9 +51,16 @@ if ( ! function_exists( 'stampvault_render_stamp_info_block' ) ) {
 						<td class="sv-value">
 							<?php
 							if ( $row['taxonomy'] ) {
-								echo $term_list( $row['taxonomy'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped (already escaped in helper)
+								echo $term_list( $row['taxonomy'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							} elseif ( $row['meta'] ) {
+								$val = get_post_meta( $post_id, $row['meta'], true );
+								if ( '' === $val || null === $val ) {
+									echo '<span class="sv-placeholder">&mdash;</span>';
+								} else {
+									echo esc_html( $val );
+								}
 							} else {
-								echo '<span class="sv-placeholder">&mdash; ' . esc_html__( 'value', 'stampvault' ) . ' &mdash;</span>';
+								echo '<span class="sv-placeholder">&mdash;</span>';
 							}
 							?>
 						</td>

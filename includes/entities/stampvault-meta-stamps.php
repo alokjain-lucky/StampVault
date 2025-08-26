@@ -51,6 +51,12 @@ function stampvault_register_stamp_meta_fields() {
 			'show_in_rest'=> true,
 			'type'        => 'string',
 		],
+		'printer' => [
+			'description' => 'Printer',
+			'single'      => true,
+			'show_in_rest'=> true,
+			'type'        => 'string',
+		],
 		'watermark' => [
 			'description' => 'Watermark',
 			'single'      => true,

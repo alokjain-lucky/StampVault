@@ -1,5 +1,11 @@
 .wp-block-stampvault-stamp-info { padding: 1rem; background: #fff; border: 1px solid #e2e5e9; border-radius:4px; }
 .wp-block-stampvault-stamp-info table.stampvault-stamp-info-table { width:100%; border-collapse: collapse; }
-.wp-block-stampvault-stamp-info table.stampvault-stamp-info-table th { text-align:left; padding:.4rem .6rem; width: 180px; font-weight:600; background:#f7f9fa; border:1px solid #e3e7eb; font-size:13px; }
-.wp-block-stampvault-stamp-info table.stampvault-stamp-info-table td { padding:.4rem .6rem; border:1px solid #e3e7eb; font-size:13px; }
+.wp-block-stampvault-stamp-info table.stampvault-stamp-info-table tr { border-bottom:1px dotted #c8d0d7; }
+.wp-block-stampvault-stamp-info table.stampvault-stamp-info-table tr:last-child { border-bottom:0; }
+.wp-block-stampvault-stamp-info table.stampvault-stamp-info-table th { text-align:left; padding:.5rem .6rem; width: 120px; font-weight:600; background:#f7f9fa; font-size:13px; border:0; }
+.wp-block-stampvault-stamp-info table.stampvault-stamp-info-table td { padding:.5rem .6rem; font-size:13px; border:0; }
 .wp-block-stampvault-stamp-info .sv-placeholder { color:#999; font-style:italic; }
+
+// Inputs on front-end (if ever exposed for editing via future enhancements)
+.wp-block-stampvault-stamp-info .sv-inline-input,
+.wp-block-stampvault-stamp-info .sv-date-input { width:100%; box-sizing:border-box; padding:4px 8px; font-size:13px; border:1px solid #c3c7cb; border-radius:2px; }

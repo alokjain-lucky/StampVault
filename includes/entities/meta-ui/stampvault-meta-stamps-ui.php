@@ -63,6 +63,7 @@ function stampvault_stamps_meta_box_callback( $post ) {
 		'denomination' => 'Denomination',
 		'quantity' => 'Quantity',
 		'perforations' => 'Perforations',
+		'printer' => 'Printer',
 		'watermark' => 'Watermark',
 		'colors' => 'Colors',
 	];
@@ -133,6 +134,7 @@ function stampvault_save_stamps_meta_box( $post_id ) {
 		'denomination',
 		'quantity',
 		'perforations',
+		'printer',
 		'watermark',
 		'colors',
 	];
