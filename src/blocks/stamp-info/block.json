@@ -1,0 +1,13 @@
+{
+  "apiVersion": 3,
+  "name": "stampvault/stamp-info",
+  "title": "Stamp Info",
+  "category": "widgets",
+  "icon": "smiley",
+  "description": "Starter block that displays a hello message.",
+  "textdomain": "stampvault",
+  "supports": { "html": false },
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css",
+  "editorStyle": "file:./editor.css"
+}

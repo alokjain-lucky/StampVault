@@ -39,9 +39,12 @@ require_once STAMPVAULT_PLUGIN_DIR . 'includes/entities/stampvault-cpt-stamps.ph
 require_once STAMPVAULT_PLUGIN_DIR . 'includes/entities/stampvault-taxonomies.php';
 require_once STAMPVAULT_PLUGIN_DIR . 'includes/entities/stampvault-meta-stamps.php';
 require_once STAMPVAULT_PLUGIN_DIR . 'includes/entities/meta-ui/stampvault-meta-stamps-ui.php';
+require_once STAMPVAULT_PLUGIN_DIR . 'includes/blocks.php';
 
 // Hooks
 register_activation_hook( __FILE__, 'stampvault_activate_plugin' );
 add_action( 'admin_notices', 'stampvault_show_data_remains_notice' );
 register_deactivation_hook( __FILE__, 'stampvault_on_deactivate' );
-register_activation_hook( __FILE__, 'stampvault_on_activate' );
+
+// Gutenberg blocks init hook
+add_action( 'init', 'stampvault_register_blocks' );

@@ -1,0 +1,16 @@
+{
+  "name": "stampvault",
+  "version": "1.0.0",
+  "description": "Gutenberg block development tooling for StampVault plugin",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "wp-scripts start",
+    "build": "wp-scripts build",
+    "format": "wp-scripts format",
+    "lint:js": "wp-scripts lint-js"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^27.3.0"
+  }
+}

@@ -1,52 +1,54 @@
-# .gitignore for WordPress Plugin Development
+###############################
+# StampVault .gitignore
+###############################
 
-# OS generated files
+# OS / Editor
 .DS_Store
 Thumbs.db
-
-# IDE and editor folders/files
 .vscode/
 .idea/
 *.sublime-workspace
 *.sublime-project
+*.swp
+*.swo
 
-# Node modules and Composer vendor
+# Node / JS
 node_modules/
-
-# Log files
+npm-debug.log*
 *.log
 
-# WordPress core files
-/wp-admin/
-/wp-includes/
+# PHP / Composer
+composer.phar
+vendor/
+# Keep composer.lock for reproducible installs (do NOT ignore)
 
-# Environment files
+# Environment / Secrets
 .env
 .env.*
 
-# Backup and export files
+# Archives / Temp
 *.zip
 *.tar.gz
 *.rar
 *.bak
 *.tmp
 
-# Plugin build artifacts
-dist/
-build/
+# WordPress core (not part of plugin repo)
+/wp-admin/
+/wp-includes/
 
-# Ignore uploads and cache
+# Caches / Uploads (only relevant if repo root is WP root; kept for safety)
 wp-content/uploads/
 wp-content/cache/
 
-# Ignore personal files
-*.swp
-*.swo
+# Build output: NOT committed (option 3 strategy). Run `npm run build` before packaging a release zip.
+dist/
+build/
 
-# Ignore plugin-specific settings
+# Plugin-specific local config
 stampvault-settings.json
-
-# Composer dependencies
+# Allow lock files for reproducible builds
+# (Remove below lines so composer.lock & package-lock.json are tracked)
 composer.lock
-composer.phar
-vendor/
+package-lock.json
+*.lock

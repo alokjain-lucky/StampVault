@@ -21,6 +21,9 @@ function stampvault_activate_plugin() {
 		// Set an option to display an admin notice if CPT is not registered
 		update_option( 'stampvault_activation_cpt_missing', 1 );
 	}
+
+	// Clear any lingering data-remains flag upon fresh activation.
+	delete_option( 'stampvault_data_remains' );
 }
 
 /**

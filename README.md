@@ -49,3 +49,55 @@ The `vendor/` directory is excluded from version control. Please run the above c
 ---
 
 *This plugin is in early development. Stay tuned for updates!*
+
+## Development (Blocks & Build Pipeline)
+StampVault uses `@wordpress/scripts` for Gutenberg block development.
+
+Current strategy: The `build/` directory is NOT committed to git (option 3). You must run a build before creating a distributable zip so end‑users get compiled block assets.
+
+### Prerequisites
+- Node.js 18+ (LTS recommended)
+- npm 8+
+- PHP 7.4+ (plugin code targets 7.2 minimum, but develop on a modern version)
+
+### Install JS & PHP dependencies
+```
+npm install
+composer install
+```
+
+### Available npm scripts
+- `npm start` – Watch mode for block development (`src/`).
+- `npm run build` – Produce production assets in `build/` (minified + `.asset.php`).
+- `npm run lint:js` – Lint JS.
+- `npm run format` – Format source.
+
+### Packaging a Release (Zip)
+1. Ensure a clean working tree (commit or stash changes).
+2. Install dependencies (first time): `npm install && composer install`.
+3. Build assets: `npm run build` (creates `build/blocks/...`).
+4. (Optional) Remove dev dependencies for production zip: `composer install --no-dev --optimize-autoloader`.
+5. Create a zip excluding development-only folders (e.g. `node_modules`, `src`, `.git`, `docs`). Example command:
+	 - macOS/Linux (from plugin root):
+		 ```bash
+		 zip -r stampvault.zip . \
+			 -x "node_modules/*" "src/*" \
+			 -x ".git/*" "docs/*" ".vscode/*" "composer.phar" \
+			 -x "*.zip"
+		 ```
+6. Distribute `stampvault.zip` (it must include the `build/` directory created in step 3).
+
+If you prefer committing `build/` again, remove it from `.gitignore` and ensure you rebuild before each release.
+
+## Release Checklist
+1. Bump version constant in `stampvault.php` (and update header if needed).
+2. Run `npm run build` (required because `build/` is ignored).
+3. Verify `build/blocks/*` contains block.json + *.asset.php + compiled JS/CSS.
+4. Run `composer install --no-dev --optimize-autoloader` (if making production zip).
+5. Package zip excluding dev folders (see Packaging section).
+6. Fresh install test: Remove existing plugin, upload zip, activate, confirm block appears in editor.
+7. Tag release in git.
+
+
+---
+Happy collecting!
