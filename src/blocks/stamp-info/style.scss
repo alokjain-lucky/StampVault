@@ -1,1 +1,5 @@
-.wp-block-stampvault-stamp-info { padding: 1rem; background: #fff; border: 1px dashed #ddd; }
+.wp-block-stampvault-stamp-info { padding: 1rem; background: #fff; border: 1px solid #e2e5e9; border-radius:4px; }
+.wp-block-stampvault-stamp-info table.stampvault-stamp-info-table { width:100%; border-collapse: collapse; }
+.wp-block-stampvault-stamp-info table.stampvault-stamp-info-table th { text-align:left; padding:.4rem .6rem; width: 180px; font-weight:600; background:#f7f9fa; border:1px solid #e3e7eb; font-size:13px; }
+.wp-block-stampvault-stamp-info table.stampvault-stamp-info-table td { padding:.4rem .6rem; border:1px solid #e3e7eb; font-size:13px; }
+.wp-block-stampvault-stamp-info .sv-placeholder { color:#999; font-style:italic; }
