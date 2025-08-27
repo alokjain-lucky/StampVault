@@ -10,5 +10,20 @@
   "supports": { "html": false },
   "editorScript": "file:./index.js",
   "style": "file:./style-index.css",
-  "editorStyle": "file:./index.css"
+  "editorStyle": "file:./index.css",
+  "example": {
+    "attributes": {},
+    "innerBlocks": [],
+    "meta": {
+      "sub_title": "Commemorative Issue",
+      "date_of_release": "2024-05-01",
+      "denomination": "5₹",
+      "quantity": "250,000",
+      "perforations": "13½ x 13",
+      "printer": "Security Press",
+      "watermark": "None",
+      "colors": "Multicolor",
+      "catalog_codes": "[ { \"catalog\": \"Scott\", \"code\": \"1234\" }, { \"catalog\": \"Michel\", \"code\": \"Mi 567\" } ]"
+    }
+  }
 }

@@ -122,7 +122,34 @@ function CatalogCodesPanel( { metaCatalogCodes, setMetaValue = () => {} } ) {
 	);
 }
 
-export default function Edit() {
+export default function Edit( props ) {
+	// Example preview (in inserter) — render static sample without data store calls
+	if ( props?.isExample ) {
+		const blockProps = useBlockProps( { className: 'stampvault-stamp-info-table-wrapper is-example' } );
+		const sample = {
+			sub_title: 'Commemorative Issue',
+			date_of_release: '2024-05-01',
+			denomination: '5₹',
+			quantity: '250,000',
+			perforations: '13½ x 13',
+			printer: 'Security Press',
+			watermark: 'None',
+			colors: 'Multicolor',
+			catalog_codes: [ { catalog: 'Scott', code: '1234' }, { catalog: 'Michel', code: 'Mi 567' } ]
+		};
+		return (
+			<div { ...blockProps }>
+				<table className="stampvault-stamp-info-table">
+					<tbody>
+						<tr><th>{ __( 'Sub Title', 'stampvault' ) }</th><td>{ sample.sub_title }</td></tr>
+						<tr><th>{ __( 'Date of Issue', 'stampvault' ) }</th><td>{ sample.date_of_release }</td></tr>
+						<tr><th>{ __( 'Denomination', 'stampvault' ) }</th><td>{ sample.denomination }</td></tr>
+						<tr><th>{ __( 'Catalog Codes', 'stampvault' ) }</th><td><ul className="sv-catalog-codes-list">{ sample.catalog_codes.map( (c,i) => <li key={ i } className="sv-catalog-codes-item">{ c.catalog }: { c.code }</li> ) }</ul></td></tr>
+					</tbody>
+				</table>
+			</div>
+		);
+	}
 	const blockProps = useBlockProps( { className: 'stampvault-stamp-info-table-wrapper' } );
 	const meta = useSelect( ( select ) => select( 'core/editor' ).getEditedPostAttribute( 'meta' ) || {} );
 	const { editPost } = useDispatch( 'core/editor' );

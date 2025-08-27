@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: StampVault
-Description: A WordPress plugin for philatelists to digitally catalog, manage, and display their stamp collections.
+Description: Catalog, manage, and showcase stamp collections with advanced organizational and display features for philatelists.
 Version: 1.0.0
 Author: Alok Jain
 Author URI: https://alokjain.dev

@@ -53,53 +53,57 @@ if ( ! function_exists( 'stampvault_render_stamp_info_block' ) ) {
 			$names = wp_list_pluck( $terms, 'name' );
 			return esc_html( implode( ', ', $names ) );
 		};
+		// Build only rows that have data (skip empty meta / taxonomy / catalog codes)
+		$rendered_rows = [];
+		foreach ( $rows as $row ) {
+			$label = esc_html( translate( $row['label'], 'stampvault' ) );
+			$value_html = '';
+			$has_value = false;
+
+			if ( $row['taxonomy'] ) {
+				$terms = get_the_terms( $post_id, $row['taxonomy'] );
+				if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+					$names = wp_list_pluck( $terms, 'name' );
+					$value_html = esc_html( implode( ', ', $names ) );
+					$has_value = $value_html !== '';
+				}
+			} elseif ( $row['meta'] ) {
+				if ( 'catalog_codes' === $row['meta'] ) {
+					$list_items_html = '';
+					foreach ( $catalog_codes_list as $item ) {
+						$cat  = isset( $item['catalog'] ) ? trim( (string) $item['catalog'] ) : '';
+						$code = isset( $item['code'] ) ? trim( (string) $item['code'] ) : '';
+						if ( $cat || $code ) {
+							$list_items_html .= '<li class="sv-catalog-codes-item">' . esc_html( $cat ) . ( $cat && $code ? ': ' : '' ) . esc_html( $code ) . '</li>';
+						}
+					}
+					if ( $list_items_html ) {
+						$value_html = '<ul class="sv-catalog-codes-list">' . $list_items_html . '</ul>';
+						$has_value = true;
+					}
+				} else {
+					$val = get_post_meta( $post_id, $row['meta'], true );
+					if ( '' !== $val && null !== $val ) {
+						$value_html = esc_html( $val );
+						$has_value = true;
+					}
+				}
+			}
+
+			if ( $has_value ) {
+				$rendered_rows[] = '<tr><th scope="row">' . $label . '</th><td class="sv-value">' . $value_html . '</td></tr>';
+			}
+		}
+
+		if ( empty( $rendered_rows ) ) {
+			return '';
+		}
+
 		ob_start();
-		?>
-		<div class="wp-block-stampvault-stamp-info">
-			<table class="stampvault-stamp-info-table">
-				<tbody>
-				<?php foreach ( $rows as $row ) : ?>
-					<tr>
-						<th scope="row"><?php echo esc_html( translate( $row['label'], 'stampvault' ) ); ?></th>
-						<td class="sv-value">
-							<?php
-							if ( $row['taxonomy'] ) {
-								echo $term_list( $row['taxonomy'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							} elseif ( $row['meta'] ) {
-									if ( 'catalog_codes' === $row['meta'] ) {
-										$list = $catalog_codes_list;
-										if ( empty( $list ) ) {
-										echo '<span class="sv-placeholder">&mdash;</span>';
-									} else {
-										echo '<ul class="sv-catalog-codes-list">';
-										foreach ( $list as $item ) {
-											$cat = isset( $item['catalog'] ) ? esc_html( $item['catalog'] ) : '';
-											$code = isset( $item['code'] ) ? esc_html( $item['code'] ) : '';
-											if ( $cat || $code ) {
-												echo '<li class="sv-catalog-codes-item">' . $cat . ( $cat && $code ? ': ' : '' ) . $code . '</li>';
-											}
-										}
-										echo '</ul>';
-									}
-								} else {
-									$val = get_post_meta( $post_id, $row['meta'], true );
-									if ( '' === $val || null === $val ) {
-										echo '<span class="sv-placeholder">&mdash;</span>';
-									} else {
-										echo esc_html( $val );
-									}
-								}
-							} else {
-								echo '<span class="sv-placeholder">&mdash;</span>';
-							}
-							?>
-						</td>
-					</tr>
-				<?php endforeach; ?>
-				</tbody>
-			</table>
-		</div>
-		<?php
-		return ob_get_clean();
+		// Output in one echo without closing PHP to avoid stray newlines. Use empty string glue.
+		echo '<div class="wp-block-stampvault-stamp-info"><table class="stampvault-stamp-info-table"><tbody>' . implode( '', $rendered_rows ) . '</tbody></table></div>';
+		$html = ob_get_clean();
+		// Trim leading/trailing whitespace/newlines completely.
+		return trim( $html );
 	}
 }
