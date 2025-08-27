@@ -22,7 +22,7 @@ if ( ! function_exists( 'stampvault_render_stamp_info_block' ) ) {
 			[ 'label' => 'Watermark',        'taxonomy' => null,                'meta' => 'watermark' ],
 			[ 'label' => 'Colors',           'taxonomy' => null,                'meta' => 'colors' ],
 			[ 'label' => 'Credits',          'taxonomy' => 'credits',           'meta' => null ],
-			[ 'label' => 'Catalog Codes',    'taxonomy' => null,                'meta' => null ],
+			[ 'label' => 'Catalog Codes',    'taxonomy' => null,                'meta' => 'catalog_codes' ],
 			[ 'label' => 'Themes',           'taxonomy' => 'themes',            'meta' => null ],
 		];
 
@@ -53,11 +53,37 @@ if ( ! function_exists( 'stampvault_render_stamp_info_block' ) ) {
 							if ( $row['taxonomy'] ) {
 								echo $term_list( $row['taxonomy'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							} elseif ( $row['meta'] ) {
-								$val = get_post_meta( $post_id, $row['meta'], true );
-								if ( '' === $val || null === $val ) {
-									echo '<span class="sv-placeholder">&mdash;</span>';
+								if ( 'catalog_codes' === $row['meta'] ) {
+									$raw = get_post_meta( $post_id, 'catalog_codes', true );
+									$list = [];
+									if ( ! empty( $raw ) ) {
+										if ( is_array( $raw ) ) {
+											$list = $raw;
+										} else {
+											$decoded = json_decode( $raw, true );
+											if ( is_array( $decoded ) ) $list = $decoded;
+										}
+									}
+									if ( empty( $list ) ) {
+										echo '<span class="sv-placeholder">&mdash;</span>';
+									} else {
+										echo '<ul class="sv-catalog-codes-list">';
+										foreach ( $list as $item ) {
+											$cat = isset( $item['catalog'] ) ? esc_html( $item['catalog'] ) : '';
+											$code = isset( $item['code'] ) ? esc_html( $item['code'] ) : '';
+											if ( $cat || $code ) {
+												echo '<li class="sv-catalog-codes-item">' . $cat . ( $cat && $code ? ': ' : '' ) . $code . '</li>';
+											}
+										}
+										echo '</ul>';
+									}
 								} else {
-									echo esc_html( $val );
+									$val = get_post_meta( $post_id, $row['meta'], true );
+									if ( '' === $val || null === $val ) {
+										echo '<span class="sv-placeholder">&mdash;</span>';
+									} else {
+										echo esc_html( $val );
+									}
 								}
 							} else {
 								echo '<span class="sv-placeholder">&mdash;</span>';

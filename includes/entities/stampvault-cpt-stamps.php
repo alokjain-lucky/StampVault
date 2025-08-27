@@ -43,7 +43,7 @@ function stampvault_register_post_type_stamps() {
 		'public'       => true,
 		'has_archive'  => true,
 		'show_in_menu' => true,
-		'supports'     => array( 'title', 'editor', 'thumbnail' ),
+		'supports'     => array( 'title', 'editor', 'thumbnail', 'custom-fields' ), // custom-fields ensures meta exposed properly
 		'show_in_rest' => true,
 		'menu_icon'    => 'dashicons-tickets-alt',
 	);

@@ -20,12 +20,39 @@ stampvault_security_check();
  * @see https://developer.wordpress.org/reference/functions/register_post_meta/
  */
 function stampvault_register_stamp_meta_fields() {
+	$auth = function() { return current_user_can( 'edit_posts' ); };
 	$fields = [
 		'sub_title' => [
-			'description' => 'Sub Title / Note',
-			'single'      => true,
-			'show_in_rest'=> true,
-			'type'        => 'string',
+			'description'    => 'Sub Title / Note',
+			'single'         => true,
+			'show_in_rest'   => true,
+			'type'           => 'string',
+			'auth_callback'  => $auth,
+		],
+		'catalog_codes' => [
+			'description'    => 'Catalog codes JSON array of {catalog,code}',
+			'single'         => true,
+			'show_in_rest'   => true,
+			'type'           => 'string', // Stored as JSON string
+			'auth_callback'  => $auth,
+			'sanitize_callback' => function( $value ) {
+				if ( is_string( $value ) ) {
+					$decoded = json_decode( $value, true );
+				} else {
+					$decoded = $value;
+				}
+				if ( ! is_array( $decoded ) ) return '';
+				$clean = [];
+				foreach ( $decoded as $row ) {
+					if ( ! is_array( $row ) ) continue;
+					$catalog = isset( $row['catalog'] ) ? sanitize_text_field( $row['catalog'] ) : '';
+					$code = isset( $row['code'] ) ? sanitize_text_field( $row['code'] ) : '';
+					if ( $catalog && $code ) {
+						$clean[] = [ 'catalog' => $catalog, 'code' => $code ];
+					}
+				}
+				return wp_json_encode( $clean );
+			},
 		],
 		'date_of_release' => [
 			'description' => 'Date of release',

@@ -9,3 +9,7 @@
 // Inputs on front-end (if ever exposed for editing via future enhancements)
 .wp-block-stampvault-stamp-info .sv-inline-input,
 .wp-block-stampvault-stamp-info .sv-date-input { width:100%; box-sizing:border-box; padding:4px 8px; font-size:13px; border:1px solid #c3c7cb; border-radius:2px; }
+
+// Catalog codes stacked list (front-end, bulleted)
+.wp-block-stampvault-stamp-info .sv-catalog-codes-list { margin:0; padding-left:1.1em; list-style:disc; }
+.wp-block-stampvault-stamp-info .sv-catalog-codes-item { margin:0; padding:0; line-height:1.3; }

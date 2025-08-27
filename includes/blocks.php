@@ -18,7 +18,11 @@ function stampvault_register_blocks() {
 	foreach ( $blocks as $block ) {
 		$dir = STAMPVAULT_PLUGIN_DIR . 'build/blocks/' . $block['name'];
 		if ( file_exists( $dir . '/block.json' ) ) {
-			register_block_type( $dir, $block['options'] ?? [] );
+			$registered = register_block_type( $dir, $block['options'] ?? [] );
+			if ( $registered && isset( $registered->editor_script ) && function_exists( 'wp_localize_script' ) ) {
+				$catalogs = function_exists( 'stampvault_get_catalogs_option' ) ? stampvault_get_catalogs_option() : [];
+				wp_localize_script( $registered->editor_script, 'StampVaultBlockData', [ 'catalogs' => $catalogs ] );
+			}
 		}
 	}
 }

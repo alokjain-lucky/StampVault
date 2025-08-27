@@ -41,3 +41,7 @@
 
 // Placeholder for taxonomy instructions
 .wp-block-stampvault-stamp-info .sv-taxonomy-placeholder { color:#666; font-style:italic; opacity:.9; }
+
+// Editor styling for catalog codes stacked list (bulleted)
+.wp-block-stampvault-stamp-info .sv-catalog-codes-list { margin:0; padding-left:1.1em; list-style:disc; }
+.wp-block-stampvault-stamp-info .sv-catalog-codes-item { margin:0; padding:0; line-height:1.3; }
