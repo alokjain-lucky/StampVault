@@ -14,6 +14,7 @@ StampVault is a WordPress plugin for philatelists to catalog, enrich, and displa
 8. REST API Usage
 9. Default Editor Template
 10. Developer Notes (lightweight)
+11. Filters & Extensibility
 
 ---
 ## 1. Overview
@@ -232,6 +233,38 @@ Composer (PHP autoload / stubs):
 composer install
 ```
 The `build/` directory is generated; ensure you build before distributing.
+
+---
+## 11. Filters & Extensibility
+
+### Filter: `stampvault_default_catalogs`
+Modify the default list of catalog names shown when the Catalogs option has not been saved yet.
+
+Signature:
+```php
+apply_filters( 'stampvault_default_catalogs', array $defaults );
+```
+
+Defaults provided by the plugin:
+```php
+['Scott','Michel','Stanley Gibbons','Yvert et Tellier','Other']
+```
+
+Example – add a custom catalog and remove one:
+```php
+add_filter( 'stampvault_default_catalogs', function( $defaults ) {
+	// Remove 'Other'
+	$defaults = array_values( array_filter( $defaults, fn($d) => $d !== 'Other' ) );
+	// Add a new catalog
+	$defaults[] = 'My Custom Catalog';
+	return $defaults;
+} );
+```
+
+Notes:
+- Filter runs on every request where defaults are needed (e.g., fresh installs, option reset situations).
+- Saved options override defaults entirely; this filter does not mutate a user‑saved list.
+- To force reversion to modified defaults you must delete the `stampvault_catalog_list` option.
 
 ---
 ## License & Contributions

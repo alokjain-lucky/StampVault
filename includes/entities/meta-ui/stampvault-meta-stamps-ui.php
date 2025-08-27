@@ -14,22 +14,7 @@
 // Security check to prevent direct access to this file.
 stampvault_security_check();
 
-/**
- * List of common stamp catalogs for the catalog codes meta field.
- */
-function stampvault_get_catalog_list() {
-	return [
-		'Scott',
-		'Michel',
-		'Stanley Gibbons',
-		'Yvert',
-		'Sassone',
-		'Zumstein',
-		'Edifil',
-		'Facit',
-		'Other',
-	];
-}
+// Catalog list now provided by settings (includes/settings/catalogs-settings.php)
 
 /**
  * Add meta box for Stamps meta fields (Classic Editor only).

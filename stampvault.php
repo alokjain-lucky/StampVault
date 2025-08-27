@@ -53,8 +53,12 @@ require_once STAMPVAULT_PLUGIN_DIR . 'includes/stampvault-admin-notices.php';
 require_once STAMPVAULT_PLUGIN_DIR . 'includes/entities/stampvault-cpt-stamps.php';
 require_once STAMPVAULT_PLUGIN_DIR . 'includes/entities/stampvault-taxonomies.php';
 require_once STAMPVAULT_PLUGIN_DIR . 'includes/entities/stampvault-meta-stamps.php';
+// Load settings (catalog list helpers) before meta UI so helper functions are available.
+require_once STAMPVAULT_PLUGIN_DIR . 'includes/settings/settings.php';
 require_once STAMPVAULT_PLUGIN_DIR . 'includes/entities/meta-ui/stampvault-meta-stamps-ui.php';
 require_once STAMPVAULT_PLUGIN_DIR . 'includes/blocks.php';
+
+// (Settings page action link now added inside includes/settings/settings.php)
 
 // Hooks
 register_activation_hook( __FILE__, 'stampvault_activate_plugin' );
