@@ -27,6 +27,19 @@ if ( ! function_exists( 'stampvault_render_stamp_info_block' ) ) {
 		];
 
 		$post_id = get_the_ID();
+		// Preload catalog codes once
+		$catalog_codes_raw = get_post_meta( $post_id, 'catalog_codes', true );
+		$catalog_codes_list = [];
+		if ( ! empty( $catalog_codes_raw ) ) {
+			if ( is_array( $catalog_codes_raw ) ) {
+				$catalog_codes_list = $catalog_codes_raw;
+			} else {
+				$decoded_tmp = json_decode( $catalog_codes_raw, true );
+				if ( is_array( $decoded_tmp ) ) {
+					$catalog_codes_list = $decoded_tmp;
+				}
+			}
+		}
 
 		/**
 		 * Helper: Fetch term names for a taxonomy for current post.
@@ -53,18 +66,9 @@ if ( ! function_exists( 'stampvault_render_stamp_info_block' ) ) {
 							if ( $row['taxonomy'] ) {
 								echo $term_list( $row['taxonomy'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							} elseif ( $row['meta'] ) {
-								if ( 'catalog_codes' === $row['meta'] ) {
-									$raw = get_post_meta( $post_id, 'catalog_codes', true );
-									$list = [];
-									if ( ! empty( $raw ) ) {
-										if ( is_array( $raw ) ) {
-											$list = $raw;
-										} else {
-											$decoded = json_decode( $raw, true );
-											if ( is_array( $decoded ) ) $list = $decoded;
-										}
-									}
-									if ( empty( $list ) ) {
+									if ( 'catalog_codes' === $row['meta'] ) {
+										$list = $catalog_codes_list;
+										if ( empty( $list ) ) {
 										echo '<span class="sv-placeholder">&mdash;</span>';
 									} else {
 										echo '<ul class="sv-catalog-codes-list">';

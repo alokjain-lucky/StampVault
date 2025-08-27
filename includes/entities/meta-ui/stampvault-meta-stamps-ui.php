@@ -22,17 +22,18 @@ stampvault_security_check();
  * @see https://developer.wordpress.org/reference/functions/add_meta_box/
  */
 function stampvault_add_stamps_meta_box() {
-	// Only add meta box if not using Gutenberg
-	if ( ! function_exists( 'use_block_editor_for_post_type' ) || ! use_block_editor_for_post_type( 'stamps' ) ) {
-		add_meta_box(
-			'stampvault_stamps_meta',
-			'Additional Stamp Details',
-			'stampvault_stamps_meta_box_callback',
-			'stamps',
-			'normal',
-			'default'
-		);
+	// Skip entirely when block editor is active for stamps post type
+	if ( function_exists( 'use_block_editor_for_post_type' ) && use_block_editor_for_post_type( 'stamps' ) ) {
+		return;
 	}
+	add_meta_box(
+		'stampvault_stamps_meta',
+		'Additional Stamp Details',
+		'stampvault_stamps_meta_box_callback',
+		'stamps',
+		'normal',
+		'default'
+	);
 }
 add_action( 'add_meta_boxes', 'stampvault_add_stamps_meta_box' );
 

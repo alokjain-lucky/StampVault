@@ -42,7 +42,13 @@ function CatalogCodesPanel( { metaCatalogCodes, setMetaValue = () => {} } ) {
 
 	const flushCatalogCodes = () => {
 		const filled = items.filter( it => it.catalog && it.code );
-		const json = JSON.stringify( filled );
+		// Remove duplicate catalog entries keeping first occurrence
+		const seen = new Set();
+		const deduped = [];
+		for ( const row of filled ) {
+			if ( ! seen.has( row.catalog ) ) { seen.add( row.catalog ); deduped.push( row ); }
+		}
+		const json = JSON.stringify( deduped );
 		if ( json !== lastPersistedRef.current ) {
 			setMetaValue( 'catalog_codes', json );
 			lastPersistedRef.current = json;
@@ -83,28 +89,34 @@ function CatalogCodesPanel( { metaCatalogCodes, setMetaValue = () => {} } ) {
 	const removeItem = ( i ) => setItems( items.filter( (_it,idx) => idx!==i ) );
 	const addItem = () => setItems( [ ...items, { catalog:'', code:'' } ] );
 
+	// Compute duplicate warnings
+	const catalogCounts = items.reduce( (acc,it) => { if ( it.catalog ) acc[it.catalog] = (acc[it.catalog]||0)+1; return acc; }, {} );
 	return (
 		<PanelBody title={ __( 'Catalog Codes', 'stampvault' ) } initialOpen={ true }>
 			{ items.length === 0 && <p>{ __( 'No catalog codes yet.', 'stampvault' ) }</p> }
-			{ items.map( ( item, i ) => (
-				<div key={ i } style={ { border:'1px solid #ddd', padding:'8px', borderRadius:4, marginBottom:8, background:'#fff' } }>
-					<SelectControl
-						label={ __( 'Catalog', 'stampvault' ) }
-						value={ item.catalog }
-						options={ [ { label: __( 'Select…', 'stampvault' ), value:'' }, ...catalogs.map( c => ( { label:c, value:c } ) ) ] }
-						onChange={ v => updateItem( i, { catalog:v } ) }
-					/>
-					<TextControl
-						label={ __( 'Code', 'stampvault' ) }
-						value={ item.code || '' }
-						onChange={ v => updateItem( i, { code:v } ) }
-					/>
-					<div style={ { display:'flex', justifyContent:'space-between' } }>
-						<Button variant="link" onClick={ () => updateItem( i, { catalog:'', code:'' } ) } disabled={ ! ( item.catalog || item.code ) }>{ __( 'Clear', 'stampvault' ) }</Button>
-						<Button isDestructive variant="secondary" onClick={ () => removeItem( i ) }>{ __( 'Delete', 'stampvault' ) }</Button>
+			{ items.map( ( item, i ) => {
+				const isDuplicate = item.catalog && catalogCounts[ item.catalog ] > 1;
+				return (
+					<div key={ i } style={ { border:'1px solid #ddd', padding:'8px', borderRadius:4, marginBottom:8, background:'#fff' } }>
+						<SelectControl
+							label={ __( 'Catalog', 'stampvault' ) }
+							value={ item.catalog }
+							options={ [ { label: __( 'Select…', 'stampvault' ), value:'' }, ...catalogs.map( c => ( { label:c, value:c } ) ) ] }
+							onChange={ v => updateItem( i, { catalog:v } ) }
+						/>
+						<TextControl
+							label={ __( 'Code', 'stampvault' ) }
+							value={ item.code || '' }
+							onChange={ v => updateItem( i, { code:v } ) }
+						/>
+						{ isDuplicate && <div style={ { color:'#b32d2e', fontSize:'12px', marginTop:'4px' } }>{ __( 'Duplicate catalog will be ignored on save.', 'stampvault' ) }</div> }
+						<div style={ { display:'flex', justifyContent:'space-between', marginTop:4 } }>
+							<Button variant="link" onClick={ () => updateItem( i, { catalog:'', code:'' } ) } disabled={ ! ( item.catalog || item.code ) }>{ __( 'Clear', 'stampvault' ) }</Button>
+							<Button isDestructive variant="secondary" onClick={ () => removeItem( i ) }>{ __( 'Delete', 'stampvault' ) }</Button>
+						</div>
 					</div>
-				</div>
-			) ) }
+				);
+			} ) }
 			<Button variant="secondary" icon="plus" onClick={ addItem }>{ __( 'Add Catalog Code', 'stampvault' ) }</Button>
 		</PanelBody>
 	);
