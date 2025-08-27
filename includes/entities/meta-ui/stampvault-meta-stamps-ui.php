@@ -161,3 +161,14 @@ function stampvault_enqueue_meta_box_assets( $hook ) {
 	}
 }
 add_action( 'admin_enqueue_scripts', 'stampvault_enqueue_meta_box_assets' );
+
+/**
+ * Remove the default "Custom Fields" meta box for the 'stamps' post type to avoid duplicate UI.
+ * We provide a tailored meta box instead, so the generic one is unnecessary.
+ */
+function stampvault_remove_stamps_default_custom_fields_box() {
+	remove_meta_box( 'postcustom', 'stamps', 'normal' );
+	remove_meta_box( 'postcustom', 'stamps', 'advanced' );
+	remove_meta_box( 'postcustom', 'stamps', 'side' );
+}
+add_action( 'admin_menu', 'stampvault_remove_stamps_default_custom_fields_box', 20 );
