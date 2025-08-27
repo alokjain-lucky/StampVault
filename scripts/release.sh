@@ -11,11 +11,16 @@ echo "==> Cleaning previous dist"
 rm -rf "$DIST_DIR" "$ROOT_DIR/$ZIP_NAME"
 mkdir -p "$DIST_DIR"
 
-echo "==> Installing production PHP dependencies"
+echo "==> Checking production PHP dependencies"
 if command -v composer >/dev/null 2>&1; then
-  (cd "$ROOT_DIR" && composer install --no-dev --quiet || true)
+  if grep -q '"require"' "$ROOT_DIR/composer.json"; then
+    echo "Installing production dependencies via Composer"
+    (cd "$ROOT_DIR" && composer install --no-dev --quiet || true)
+  else
+    echo "No production composer requirements detected; skipping composer install"
+  fi
 else
-  echo "Composer not found; skipping PHP dependency install" >&2
+  echo "Composer not found; skipping (none required)" >&2
 fi
 
 echo "==> Building block assets"
@@ -33,8 +38,11 @@ rsync -a --exclude node_modules/ \
   --exclude dist/ \
   --exclude scripts/ \
   --exclude .gitignore \
+  --exclude package.json \
   --exclude package-lock.json \
+  --exclude composer.json \
   --exclude composer.lock \
+  --exclude vendor/ \
   --exclude README.md \
   "$ROOT_DIR/" "$DIST_DIR/$PLUGIN_SLUG/"
 
