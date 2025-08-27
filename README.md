@@ -235,7 +235,11 @@ The `build/` directory is generated; ensure you build before distributing.
 
 ---
 ## License & Contributions
-Private repository – all rights reserved. Open issues / PRs for improvements.
+Licensed under the GNU General Public License v2.0 or later (GPL-2.0-or-later).
+
+You are free to use, modify, and redistribute this plugin under the terms of the GPL. See `LICENSE` file for the full text.
+
+Contributions (issues, pull requests, documentation improvements) are welcome. By contributing you agree your code will be released under the GPL-2.0-or-later license.
 
 ---
 Happy collecting & hacking!
