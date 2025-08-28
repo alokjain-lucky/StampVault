@@ -1,7 +1,7 @@
 === StampVault ===
-Contributors: alokjain-lucky
+Contributors: Alok Jain
 Donate link: https://alokjain.dev
-Tags: stamps, philately, collection, catalog, taxonomy, gutenberg, custom post type
+Tags: stamps, philately, collection, catalog
 Requires at least: 5.6
 Tested up to: 6.5
 Requires PHP: 7.2
