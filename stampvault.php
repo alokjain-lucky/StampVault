@@ -2,7 +2,7 @@
 /*
 Plugin Name: StampVault
 Description: Catalog, manage, and showcase stamp collections with advanced organizational and display features for philatelists.
-Version: 1.0.0
+Version: 1.1.0
 Author: Alok Jain
 Author URI: https://alokjain.dev
 Plugin URI: https://alokjain-lucky.github.io/StampVault/
@@ -43,7 +43,7 @@ if ( ! function_exists( 'stampvault_security_check' ) ) {
 stampvault_security_check();
 
 // Define plugin constants
-define( 'STAMPVAULT_VERSION', '1.0.0' );
+define( 'STAMPVAULT_VERSION', '1.1.0' );
 define( 'STAMPVAULT_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'STAMPVAULT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 

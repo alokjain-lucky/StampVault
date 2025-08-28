@@ -5,7 +5,7 @@ Tags: stamps, philately, collection, catalog
 Requires at least: 5.6
 Tested up to: 6.5
 Requires PHP: 7.2
-Stable tag: trunk
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,10 +52,16 @@ Yes, all user-facing text is translatable.
 4. StampVault settings page
 
 == Changelog ==
+= 1.1.0 =
+* Added custom columns and filters for stamps listing in admin
+
 = 1.0.0 =
 * Initial release
 
 == Upgrade Notice ==
+= 1.1.0 =
+Added custom columns and filters for stamps listing in admin
+
 = 1.0.0 =
 First public release.
 
