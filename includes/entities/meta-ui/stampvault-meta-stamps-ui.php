@@ -78,18 +78,20 @@ function stampvault_stamps_meta_box_callback( $post ) {
 	if ( empty( $catalog_codes ) ) {
 		$catalog_codes[] = [ 'catalog' => '', 'code' => '' ];
 	}
-	foreach ( $catalog_codes as $i => $row ) {
-		echo '<tr>';
-		echo '<td style="padding:6px 4px;"><select name="catalog_codes['.$i.'][catalog]" style="width:100%;">';
-		foreach ( $catalogs as $cat ) {
-			$selected = ( isset($row['catalog']) && $row['catalog'] === $cat ) ? 'selected' : '';
-			echo '<option value="'.esc_attr($cat).'" '.$selected.'>'.esc_html($cat).'</option>';
-		}
-		echo '</select></td>';
-		echo '<td style="padding:6px 4px;"><input type="text" name="catalog_codes['.$i.'][code]" value="'.esc_attr($row['code'] ?? '').'" class="widefat" style="width:100%;" /></td>';
-		echo '<td style="padding:6px 4px; text-align:center;"><button type="button" class="button stampvault-remove-catalog-row" style="background:#e74c3c; color:#fff; border:none;">Remove</button></td>';
-		echo '</tr>';
-	}
+	   foreach ( $catalog_codes as $i => $row ) {
+		   $i_esc = esc_attr( $i );
+		   echo '<tr>';
+		echo '<td style="padding:6px 4px;"><select name="catalog_codes['.esc_attr($i_esc).'][catalog]" style="width:100%;">';
+		   foreach ( $catalogs as $cat ) {
+			   $selected = ( isset($row['catalog']) && $row['catalog'] === $cat ) ? 'selected' : '';
+			   $selected_esc = esc_attr( $selected );
+			   echo '<option value="'.esc_attr($cat).'" '.esc_attr($selected_esc).'>'.esc_html($cat).'</option>';
+		   }
+		   echo '</select></td>';
+		echo '<td style="padding:6px 4px;"><input type="text" name="catalog_codes['.esc_attr($i_esc).'][code]" value="'.esc_attr($row['code'] ?? '').'" class="widefat" style="width:100%;" /></td>';
+		   echo '<td style="padding:6px 4px; text-align:center;"><button type="button" class="button stampvault-remove-catalog-row" style="background:#e74c3c; color:#fff; border:none;">Remove</button></td>';
+		   echo '</tr>';
+	   }
 	echo '</tbody></table>';
 	echo '<button type="button" class="button" id="stampvault-add-catalog-row" style="margin-top:8px; background:#0073aa; color:#fff;">Add Catalog Code</button>';
 }
@@ -100,12 +102,13 @@ function stampvault_stamps_meta_box_callback( $post ) {
  * @param int $post_id The ID of the post being saved.
  */
 function stampvault_save_stamps_meta_box( $post_id ) {
-	if ( ! isset( $_POST['stampvault_stamps_meta_box_nonce'] ) ) {
-		return;
-	}
-	if ( ! wp_verify_nonce( $_POST['stampvault_stamps_meta_box_nonce'], 'stampvault_stamps_meta_box' ) ) {
-		return;
-	}
+	   if ( ! isset( $_POST['stampvault_stamps_meta_box_nonce'] ) ) {
+		   return;
+	   }
+	   $nonce = wp_unslash( $_POST['stampvault_stamps_meta_box_nonce'] );
+	   if ( ! wp_verify_nonce( $nonce, 'stampvault_stamps_meta_box' ) ) {
+		   return;
+	   }
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return;
 	}
@@ -124,26 +127,27 @@ function stampvault_save_stamps_meta_box( $post_id ) {
 		'watermark',
 		'colors',
 	];
-	foreach ( $fields as $key ) {
-		if ( isset( $_POST[ $key ] ) ) {
-			update_post_meta( $post_id, $key, sanitize_text_field( $_POST[ $key ] ) );
-		}
-	}
+	   foreach ( $fields as $key ) {
+		   if ( isset( $_POST[ $key ] ) ) {
+			   update_post_meta( $post_id, $key, sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) );
+		   }
+	   }
 	// Save catalog codes as JSON
-	if ( isset( $_POST['catalog_codes'] ) && is_array( $_POST['catalog_codes'] ) ) {
-		$cleaned = array();
-		foreach ( $_POST['catalog_codes'] as $row ) {
-			if ( ! empty( $row['catalog'] ) && ! empty( $row['code'] ) ) {
-				$cleaned[] = [
-					'catalog' => sanitize_text_field( $row['catalog'] ),
-					'code'    => sanitize_text_field( $row['code'] ),
-				];
-			}
-		}
-		update_post_meta( $post_id, 'catalog_codes', wp_json_encode( $cleaned ) );
-	} else {
-		delete_post_meta( $post_id, 'catalog_codes' );
-	}
+	   if ( isset( $_POST['catalog_codes'] ) && is_array( $_POST['catalog_codes'] ) ) {
+		   $catalog_codes = wp_unslash( $_POST['catalog_codes'] );
+		   $cleaned = array();
+		   foreach ( $catalog_codes as $row ) {
+			   if ( ! empty( $row['catalog'] ) && ! empty( $row['code'] ) ) {
+				   $cleaned[] = [
+					   'catalog' => sanitize_text_field( $row['catalog'] ),
+					   'code'    => sanitize_text_field( $row['code'] ),
+				   ];
+			   }
+		   }
+		   update_post_meta( $post_id, 'catalog_codes', wp_json_encode( $cleaned ) );
+	   } else {
+		   delete_post_meta( $post_id, 'catalog_codes' );
+	   }
 }
 add_action( 'save_post', 'stampvault_save_stamps_meta_box' );
 
@@ -154,8 +158,8 @@ function stampvault_enqueue_meta_box_assets( $hook ) {
 	global $post;
 	if ( $hook === 'post-new.php' || $hook === 'post.php' ) {
 		if ( isset( $post ) && $post->post_type === 'stamps' ) {
-			wp_enqueue_style( 'stampvault-meta-stamps-ui', plugin_dir_url( __FILE__ ) . 'stampvault-meta-stamps-ui.css' );
-			wp_enqueue_script( 'stampvault-meta-stamps-ui', plugin_dir_url( __FILE__ ) . 'stampvault-meta-stamps-ui.js', array( 'jquery' ), false, true );
+			   wp_enqueue_style( 'stampvault-meta-stamps-ui', plugin_dir_url( __FILE__ ) . 'stampvault-meta-stamps-ui.css', array(), defined('STAMPVAULT_VERSION') ? STAMPVAULT_VERSION : '1.0.0' );
+			   wp_enqueue_script( 'stampvault-meta-stamps-ui', plugin_dir_url( __FILE__ ) . 'stampvault-meta-stamps-ui.js', array( 'jquery' ), defined('STAMPVAULT_VERSION') ? STAMPVAULT_VERSION : '1.0.0', true );
 			wp_localize_script( 'stampvault-meta-stamps-ui', 'stampvaultCatalogList', stampvault_get_catalog_list() );
 		}
 	}

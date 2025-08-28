@@ -21,18 +21,18 @@ add_filter( 'manage_stamps_posts_columns', 'stampvault_add_stamps_columns' );
  */
 function stampvault_render_stamps_columns( $column, $post_id ) {
 	switch ( $column ) {
-		case 'stamp_types':
-			$types = get_the_term_list( $post_id, 'stamp_types', '', ', ' );
-			echo $types ? $types : '—';
-			break;
-		case 'countries':
-			$countries = get_the_term_list( $post_id, 'countries', '', ', ' );
-			echo $countries ? $countries : '—';
-			break;
-		case 'themes':
-			$themes = get_the_term_list( $post_id, 'themes', '', ', ' );
-			echo $themes ? $themes : '—';
-			break;
+		   case 'stamp_types':
+			   $types = get_the_term_list( $post_id, 'stamp_types', '', ', ' );
+			   echo $types ? wp_kses_post( $types ) : '—';
+			   break;
+		   case 'countries':
+			   $countries = get_the_term_list( $post_id, 'countries', '', ', ' );
+			   echo $countries ? wp_kses_post( $countries ) : '—';
+			   break;
+		   case 'themes':
+			   $themes = get_the_term_list( $post_id, 'themes', '', ', ' );
+			   echo $themes ? wp_kses_post( $themes ) : '—';
+			   break;
 	}
 }
 add_action( 'manage_stamps_posts_custom_column', 'stampvault_render_stamps_columns', 10, 2 );
@@ -66,10 +66,10 @@ function stampvault_stamps_filters() {
 		if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
 			echo '<select name="' . esc_attr( $tax ) . '" class="postform">';
 			echo '<option value="">' . esc_html( $label ) . '</option>';
-			foreach ( $terms as $term ) {
-				$selected = ( isset( $_GET[ $tax ] ) && $_GET[ $tax ] == $term->slug ) ? ' selected="selected"' : '';
-				echo '<option value="' . esc_attr( $term->slug ) . '"' . $selected . '>' . esc_html( $term->name ) . '</option>';
-			}
+			   foreach ( $terms as $term ) {
+				   $selected = ( isset( $_GET[ $tax ] ) && $_GET[ $tax ] == $term->slug ) ? ' selected="selected"' : '';
+				   echo wp_kses_post( '<option value="' . esc_attr( $term->slug ) . '"' . $selected . '>' . esc_html( $term->name ) . '</option>' );
+			   }
 			echo '</select>';
 		}
 	}

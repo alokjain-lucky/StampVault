@@ -11,19 +11,19 @@ if ( ! function_exists( 'stampvault_render_stamp_info_block' ) ) {
 		}
 		// Row configuration: label => taxonomy slug (or null for placeholder rows not yet implemented).
 		$rows = [
-			[ 'label' => 'Sub Title',        'taxonomy' => null,                'meta' => 'sub_title' ],
-			[ 'label' => 'Stamp Set',        'taxonomy' => 'stamp_sets',        'meta' => null ],
-			[ 'label' => 'Date of Issue',    'taxonomy' => null,                'meta' => 'date_of_release' ],
-			[ 'label' => 'Denomination',     'taxonomy' => null,                'meta' => 'denomination' ],
-			[ 'label' => 'Quantity',         'taxonomy' => null,                'meta' => 'quantity' ],
-			[ 'label' => 'Perforation',      'taxonomy' => null,                'meta' => 'perforations' ],
-			[ 'label' => 'Printer',          'taxonomy' => null,                'meta' => 'printer' ],
-			[ 'label' => 'Printing Process', 'taxonomy' => 'printing_process',  'meta' => null ],
-			[ 'label' => 'Watermark',        'taxonomy' => null,                'meta' => 'watermark' ],
-			[ 'label' => 'Colors',           'taxonomy' => null,                'meta' => 'colors' ],
-			[ 'label' => 'Credits',          'taxonomy' => 'credits',           'meta' => null ],
-			[ 'label' => 'Catalog Codes',    'taxonomy' => null,                'meta' => 'catalog_codes' ],
-			[ 'label' => 'Themes',           'taxonomy' => 'themes',            'meta' => null ],
+			[ 'label' => __( 'Sub Title', 'stampvault' ),        'taxonomy' => null,                'meta' => 'sub_title' ],
+			[ 'label' => __( 'Stamp Set', 'stampvault' ),        'taxonomy' => 'stamp_sets',        'meta' => null ],
+			[ 'label' => __( 'Date of Issue', 'stampvault' ),    'taxonomy' => null,                'meta' => 'date_of_release' ],
+			[ 'label' => __( 'Denomination', 'stampvault' ),     'taxonomy' => null,                'meta' => 'denomination' ],
+			[ 'label' => __( 'Quantity', 'stampvault' ),         'taxonomy' => null,                'meta' => 'quantity' ],
+			[ 'label' => __( 'Perforation', 'stampvault' ),      'taxonomy' => null,                'meta' => 'perforations' ],
+			[ 'label' => __( 'Printer', 'stampvault' ),          'taxonomy' => null,                'meta' => 'printer' ],
+			[ 'label' => __( 'Printing Process', 'stampvault' ), 'taxonomy' => 'printing_process',  'meta' => null ],
+			[ 'label' => __( 'Watermark', 'stampvault' ),        'taxonomy' => null,                'meta' => 'watermark' ],
+			[ 'label' => __( 'Colors', 'stampvault' ),           'taxonomy' => null,                'meta' => 'colors' ],
+			[ 'label' => __( 'Credits', 'stampvault' ),          'taxonomy' => 'credits',           'meta' => null ],
+			[ 'label' => __( 'Catalog Codes', 'stampvault' ),    'taxonomy' => null,                'meta' => 'catalog_codes' ],
+			[ 'label' => __( 'Themes', 'stampvault' ),           'taxonomy' => 'themes',            'meta' => null ],
 		];
 
 		$post_id = get_the_ID();
@@ -56,7 +56,7 @@ if ( ! function_exists( 'stampvault_render_stamp_info_block' ) ) {
 		// Build only rows that have data (skip empty meta / taxonomy / catalog codes)
 		$rendered_rows = [];
 		foreach ( $rows as $row ) {
-			$label = esc_html( translate( $row['label'], 'stampvault' ) );
+			$label = esc_html( $row['label'] );
 			$value_html = '';
 			$has_value = false;
 
@@ -101,7 +101,7 @@ if ( ! function_exists( 'stampvault_render_stamp_info_block' ) ) {
 
 		ob_start();
 		// Output in one echo without closing PHP to avoid stray newlines. Use empty string glue.
-		echo '<div class="wp-block-stampvault-stamp-info"><table class="stampvault-stamp-info-table"><tbody>' . implode( '', $rendered_rows ) . '</tbody></table></div>';
+	echo '<div class="wp-block-stampvault-stamp-info"><table class="stampvault-stamp-info-table"><tbody>' . esc_html( implode( '', $rendered_rows ) ) . '</tbody></table></div>';
 		$html = ob_get_clean();
 		// Trim leading/trailing whitespace/newlines completely.
 		return trim( $html );

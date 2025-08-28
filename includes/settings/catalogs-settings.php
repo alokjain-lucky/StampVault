@@ -144,9 +144,12 @@ function stampvault_render_settings_tab_catalogs() {
 		<button type="submit" class="button button-secondary button-link-delete" onclick="return confirm('<?php echo esc_js( __( 'Reset catalog list to defaults? This will overwrite the current list.', 'stampvault' ) ); ?>');" style="margin-top:4px;">
 			<?php esc_html_e( 'Reset to Defaults', 'stampvault' ); ?>
 		</button>
-		<p class="description" style="margin:8px 0 0;">
-			<?php printf( esc_html__( 'Default catalogs: %s', 'stampvault' ), esc_html( implode( ', ', stampvault_get_default_catalogs() ) ) ); ?>
-		</p>
+		   <p class="description" style="margin:8px 0 0;">
+			   <?php
+			   /* translators: %s: Comma-separated list of default catalog names. */
+			   printf( esc_html__( 'Default catalogs: %s', 'stampvault' ), esc_html( implode( ', ', stampvault_get_default_catalogs() ) ) );
+			   ?>
+		   </p>
 	</form>
 	<script>
 	(function(){

@@ -3,14 +3,14 @@ Contributors: Alok Jain
 Donate link: https://alokjain.dev
 Tags: stamps, philately, collection, catalog
 Requires at least: 5.6
-Tested up to: 6.5
+Tested up to: 6.8
 Requires PHP: 7.2
 Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 
-A powerful plugin to catalog, manage, and showcase stamp collections with advanced organizational and display features for philatelists.
+A powerful plugin to catalog, manage, and showcase stamp collections for philatelists with advanced features.
 
 Full documentation: https://alokjain-lucky.github.io/StampVault/
 
