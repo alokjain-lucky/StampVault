@@ -57,6 +57,8 @@ require_once STAMPVAULT_PLUGIN_DIR . 'includes/entities/stampvault-meta-stamps.p
 require_once STAMPVAULT_PLUGIN_DIR . 'includes/settings/settings.php';
 require_once STAMPVAULT_PLUGIN_DIR . 'includes/entities/meta-ui/stampvault-meta-stamps-ui.php';
 require_once STAMPVAULT_PLUGIN_DIR . 'includes/blocks.php';
+// Load admin columns and filters for Stamps CPT
+require_once STAMPVAULT_PLUGIN_DIR . 'includes/stampvault-stamps-admin.php';
 
 // (Settings page action link now added inside includes/settings/settings.php)
 
