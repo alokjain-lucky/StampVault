@@ -45,6 +45,8 @@ rsync -a --exclude node_modules/ \
   --exclude composer.lock \
   --exclude vendor/ \
   --exclude README.md \
+  --exclude .DS_Store \
+  --exclude '*.sh' \
   "$ROOT_DIR/" "$DIST_DIR/$PLUGIN_SLUG/"
 
 echo "==> Including built assets"

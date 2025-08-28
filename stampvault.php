@@ -5,7 +5,7 @@ Description: Catalog, manage, and showcase stamp collections with advanced organ
 Version: 1.0.0
 Author: Alok Jain
 Author URI: https://alokjain.dev
-Plugin URI: https://github.com/alokjain-lucky/StampVault
+Plugin URI: https://alokjain-lucky.github.io/StampVault/
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: stampvault
