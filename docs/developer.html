@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Developer Guide | StampVault Documentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Developer guide for the StampVault WordPress plugin. Learn about extensibility, filters, and plugin internals.">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">StampVault</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="features.html">Features</a></li>
+          <li class="nav-item"><a class="nav-link" href="theme.html">Theme Integration</a></li>
+          <li class="nav-item"><a class="nav-link" href="api.html">API</a></li>
+          <li class="nav-item"><a class="nav-link" href="developer.html">Developer Guide</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <main class="container">
+    <header class="mb-5 text-center">
+      <h1>Developer Guide</h1>
+      <p class="lead">Extending and customizing StampVault.</p>
+    </header>
+    <section class="mb-5">
+      <h2>Build &amp; Tooling</h2>
+      <ul>
+        <li>Build tooling: <code>@wordpress/scripts</code> (<code>npm install</code>, <code>npm run build</code>)</li>
+        <li>Composer (PHP autoload / stubs): <code>composer install</code></li>
+      </ul>
+    </section>
+    <section class="mb-5">
+      <h2>Filters &amp; Extensibility</h2>
+      <h3>Filter: <code>stampvault_default_catalogs</code></h3>
+      <pre><code>add_filter( 'stampvault_default_catalogs', function( $defaults ) {
+  $defaults[] = 'My Custom Catalog';
+  return $defaults;
+} );
+</code></pre>
+      <p>Defaults provided by the plugin:</p>
+      <pre><code>['Scott','Michel','Stanley Gibbons','Yvert et Tellier','Other']
+</code></pre>
+    </section>
+    <section class="mb-5">
+      <h2>License &amp; Contributions</h2>
+      <p>Licensed under the GNU General Public License v2.0 or later (GPL-2.0-or-later).</p>
+      <p>Contributions (issues, pull requests, documentation improvements) are welcome. By contributing you agree your code will be released under the GPL-2.0-or-later license.</p>
+    </section>
+  </main>
+  <footer class="bg-light text-center py-3">
+    <small>This project is <a href="https://github.com/alokjain-lucky/StampVault" target="_blank">open source</a>. Developed and maintained by <a href="https://alokjain.dev" target="_blank">Alok Jain</a>.</small>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

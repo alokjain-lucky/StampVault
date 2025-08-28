@@ -37,6 +37,7 @@ rsync -a --exclude node_modules/ \
   --exclude .git/ \
   --exclude dist/ \
   --exclude scripts/ \
+  --exclude docs/ \
   --exclude .gitignore \
   --exclude package.json \
   --exclude package-lock.json \

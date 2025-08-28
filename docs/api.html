@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>API Reference | StampVault Documentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="REST API reference for the StampVault WordPress plugin.">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">StampVault</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="features.html">Features</a></li>
+          <li class="nav-item"><a class="nav-link" href="theme.html">Theme Integration</a></li>
+          <li class="nav-item"><a class="nav-link" href="api.html">API</a></li>
+          <li class="nav-item"><a class="nav-link" href="developer.html">Developer Guide</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <main class="container">
+    <header class="mb-5 text-center">
+      <h1>API Reference</h1>
+      <p class="lead">REST API endpoints and meta field usage for StampVault.</p>
+    </header>
+    <section class="mb-5">
+      <h2>REST API Endpoints</h2>
+      <ul>
+        <li><strong>Stamps:</strong> <code>/wp-json/wp/v2/stamps</code></li>
+        <li><strong>Taxonomies:</strong> <code>/wp-json/wp/v2/taxonomies</code></li>
+        <li><strong>Terms:</strong> <code>/wp-json/wp/v2/{taxonomy}</code> (e.g., <code>/wp-json/wp/v2/countries</code>)</li>
+      </ul>
+      <h3>Example: Fetch Stamps</h3>
+      <pre><code>fetch('/wp-json/wp/v2/stamps?per_page=5&_embed')
+  .then(r =&gt; r.json())
+  .then(data =&gt; console.log(data));
+</code></pre>
+      <h3>Example: Response Fragment</h3>
+      <pre><code>{
+  "id": 101,
+  "slug": "example-stamp",
+  "meta": {
+    "denomination": "5 Rs",
+    "printer": "Security Press",
+    "catalog_codes": "[{\"catalog\":\"Scott\",\"code\":\"123a\"}]"
+  }
+}
+</code></pre>
+    </section>
+    <section class="mb-5">
+      <h2>Meta Fields in API</h2>
+      <p>All meta fields are available in the <code>meta</code> object of each stamp. Example usage:</p>
+      <pre><code>echo esc_html( get_post_meta( get_the_ID(), 'denomination', true ) );
+</code></pre>
+      <h3>Catalog Codes (JSON)</h3>
+      <pre><code>$raw = get_post_meta( get_the_ID(), 'catalog_codes', true );
+$codes = json_decode( $raw, true );
+if ( is_array( $codes ) ) {
+  foreach ( $codes as $c ) {
+    printf('&lt;span class="catalog-code"&gt;&lt;strong&gt;%s:&lt;/strong&gt; %s&lt;/span&gt; ', esc_html($c['catalog']), esc_html($c['code']));
+  }
+}
+</code></pre>
+    </section>
+    <section class="mb-5">
+      <h2>Advanced Filtering</h2>
+      <p>For advanced REST filtering (e.g., by meta), you may need to register custom endpoints or use <code>register_rest_field</code> in PHP.</p>
+    </section>
+  </main>
+  <footer class="bg-light text-center py-3">
+    <small>This project is <a href="https://github.com/alokjain-lucky/StampVault" target="_blank">open source</a>. Developed and maintained by <a href="https://alokjain.dev" target="_blank">Alok Jain</a>.</small>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
