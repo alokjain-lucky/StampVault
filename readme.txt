@@ -49,6 +49,7 @@ Yes, all user-facing text is translatable.
 1. Stamps admin listing with custom columns and filters
 2. Stamp Info block in the editor
 3. Example single stamp display
+4. StampVault settings page
 
 == Changelog ==
 = 1.0.0 =
